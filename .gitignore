@@ -2,6 +2,7 @@
 RemoteSystemsTempFiles/
 Release/
 Default/
+.cproject
 bin/
 .classpath
 .project
