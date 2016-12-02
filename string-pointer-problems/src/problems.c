@@ -13,6 +13,7 @@ void reasignPointer(int* valuePtr);
 void modifyPointer(int* valuePtr);
 char* my_strstr(const char* haystack, const char* needle);
 int getNeedleInAHaystack(char* haystack, const char* needle);
+int my_strcmp(const char* str1, const char* str2);
 
 int main(void) {
 
@@ -28,9 +29,44 @@ int main(void) {
 	printf("getNeedleInAHaystack Result is: %d\n", result);
 
 	char* result2 = my_strstr("azklneedleqbacszg", "needle");
-	printf("%s\n",result2);
+	printf("%s\n", result2);
+
+	int result3 = strcmp("zzz", "aaaa");
+	printf("strcmp of zzz, aaaa: %d\n", result3);
+
+	int result4 = my_strcmp("h", "a");
+	printf("strcmp: %d\n", result4);
 
 	return 0;
+}
+
+/**
+ * Function to compare strings - same as strcmp.
+ */
+int my_strcmp(const char* str1, const char* str2) {
+
+	if (str1 == NULL && str2 == NULL)
+		return 0;
+
+	if (str1 == NULL)
+		return 0 - *str2;
+
+	if (str2 == NULL)
+		return *str1;
+
+	int i;
+	for (i = 0; i < strlen(str1); i++) {
+		if (i == strlen(str2))
+			return strlen(str1) - strlen(str2);
+
+		if (str1[i] != str2[i])
+			return str1[i] - str2[i];
+	}
+
+	if (strlen(str2) > strlen(str1))
+		return strlen(str1) - strlen(str2);
+	else
+		return 0;
 }
 
 /*
@@ -44,12 +80,12 @@ int getNeedleInAHaystack(char* haystack, const char* needle) {
 	int mainPos = 0;
 
 	int i;
-	for (i = 0; i < sizeof(haystack); i++) {
+	for (i = 0; i < strlen(haystack); i++) {
 		int hPos = mainPos;
 		int nPos = 0;
 
 		int j;
-		for (j = 0; j < sizeof(needle); j++) {
+		for (j = 0; j < strlen(needle); j++) {
 			if (haystack[hPos] == needle[nPos]) {
 				hPos++;
 				nPos++;
@@ -58,7 +94,7 @@ int getNeedleInAHaystack(char* haystack, const char* needle) {
 			}
 		}
 
-		if (nPos == sizeof(needle) - 2)
+		if (nPos == strlen(needle))
 			return mainPos;
 		else
 			mainPos++;
